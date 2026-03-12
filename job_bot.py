@@ -2,6 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import json
+def load_sent_jobs():
+    sent_jobs = load_sent_jobs()
+
+def save_sent_jobs(sent_jobs):
+    with open("sent_jobs.json", "w") as f:
+        json.dump(list(sent_jobs), f)
 
 BOT_TOKEN = "8644838935:AAHCnQk96pNv-EFTqwsRL4LBTC2XzzvFGCQ"
 CHAT_ID = "8040018117"
@@ -75,6 +81,7 @@ def scan_jobs():
                 if job_id not in sent_jobs:
 
                     sent_jobs.add(job_id)
+                    save_sent_jobs(sent_jobs)
 
                     with open("sent_jobs.json", "w") as f:
                         json.dump(list(sent_jobs), f)
@@ -89,3 +96,4 @@ while True:
 
 
     time.sleep(900)
+
