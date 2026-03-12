@@ -28,7 +28,8 @@ keywords = [
 "iso",
 "continuous improvement",
 "operational excellence",
-"process improvement"
+"process improvement",
+"ISO 9001"
 ]
 
 exclude_keywords = [
@@ -98,6 +99,7 @@ while True:
 
 
     time.sleep(900)
+
 
 
 
