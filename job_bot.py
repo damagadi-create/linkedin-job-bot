@@ -66,14 +66,15 @@ def scan_jobs():
 
             title = job.text.strip()
             href = job["href"]
+            job_id = href.split("/")[-1].split("?")[0]
 
             title_lower = title.lower()
 
             if any(k in title_lower for k in keywords) and not any(x in title_lower for x in exclude_keywords):
 
-                if href not in sent_jobs:
+                if job_id not in sent_jobs:
 
-                    sent_jobs.add(href)
+                    sent_jobs.add(job_id)
 
                     with open("sent_jobs.json", "w") as f:
                         json.dump(list(sent_jobs), f)
@@ -85,5 +86,6 @@ def scan_jobs():
 while True:
 
     scan_jobs()
+
 
     time.sleep(900)
