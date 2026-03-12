@@ -18,7 +18,7 @@ search_urls = {
 
 "LinkedIn Remote": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Germany&f_WT=2&f_TPR=r28800",
     
-"Stepstone" "https://www.stepstone.de/jobs/qualit%c3%a4t/in-22525-hamburg?radius=10&searchOrigin=membersarea&rsearch=1"
+"Stepstone" "https://www.stepstone.de/jobs/quality/in-22525-hamburg?radius=10&searchOrigin=Resultlist_top-search"
     
 }
 
@@ -98,5 +98,6 @@ while True:
 
 
     time.sleep(900)
+
 
 
