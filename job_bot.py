@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import json
 def load_sent_jobs():
-    sent_jobs = load_sent_jobs()
+sent_jobs = load_sent_jobs()
 
 def save_sent_jobs(sent_jobs):
     with open("sent_jobs.json", "w") as f:
@@ -18,7 +18,7 @@ search_urls = {
 
 "LinkedIn Remote": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Germany&f_WT=2&f_TPR=r28800",
     
-"Stepstone" "https://www.stepstone.de/jobs/quality/in-22525-hamburg?radius=10&searchOrigin=Resultlist_top-search"
+"Stepstone": "https://www.stepstone.de/jobs/quality/in-22525-hamburg?radius=10&searchOrigin=Resultlist_top-search"
     
 }
 
@@ -66,7 +66,6 @@ def scan_jobs():
     for site, url in search_urls.items():
 
         r = requests.get(url, headers=headers)
-
         soup = BeautifulSoup(r.text, "html.parser")
 
         jobs = soup.select("a.base-card__full-link")
@@ -75,7 +74,8 @@ def scan_jobs():
 
             title = job.text.strip()
             href = job["href"]
-            job_id = href.split("/")[-1].split("?")[0]
+
+            job_id = f"{title}_{href}".lower()
 
             title_lower = title.lower()
 
@@ -86,19 +86,21 @@ def scan_jobs():
                     sent_jobs.add(job_id)
                     save_sent_jobs(sent_jobs)
 
-                    with open("sent_jobs.json", "w") as f:
-                        json.dump(list(sent_jobs), f)
+                    # limit stored jobs
+                    if len(sent_jobs) > 2000:
+                    sent_jobs.pop()
 
                     message = f"{site} job\n\n{title}\n{href}"
-
                     send_telegram(message)
-
+                    
+        time.sleep(5)
 while True:
 
     scan_jobs()
 
 
     time.sleep(900)
+
 
 
 
