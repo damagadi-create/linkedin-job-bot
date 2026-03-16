@@ -2,12 +2,19 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import json
+
 def load_sent_jobs():
-sent_jobs = load_sent_jobs()
+    try:
+        with open("sent_jobs.json", "r") as f:
+            return set(json.load(f))
+    except:
+        return set()
 
 def save_sent_jobs(sent_jobs):
     with open("sent_jobs.json", "w") as f:
         json.dump(list(sent_jobs), f)
+
+sent_jobs = load_sent_jobs()
 
 BOT_TOKEN = "8644838935:AAHCnQk96pNv-EFTqwsRL4LBTC2XzzvFGCQ"
 CHAT_ID = "8040018117"
