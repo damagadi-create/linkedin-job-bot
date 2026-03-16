@@ -95,7 +95,7 @@ def scan_jobs():
 
                     # limit stored jobs
                     if len(sent_jobs) > 2000:
-                    sent_jobs.pop()
+                        sent_jobs.pop()
 
                     message = f"{site} job\n\n{title}\n{href}"
                     send_telegram(message)
