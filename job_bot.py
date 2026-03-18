@@ -10,6 +10,7 @@ search_urls = {
     "LinkedIn Hamburg": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Hamburg%2C%20Germany&f_TPR=r28800",
     "LinkedIn Remote": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Germany&f_WT=2&f_TPR=r28800",
     "Stepstone": "https://www.stepstone.de/jobs/quality-manager/in-hamburg?radius=30&searchOrigin=Resultlist_top-search",
+    "Indeed Hamburg": "https://de.indeed.com/jobs?q=quality+manager+OR+qualit%C3%A4tsmanager+OR+quality+engineer&l=Hamburg&fromage=1",
     "Xing": "https://www.xing.com/jobs/search?keywords=quality+manager+OR+quality+engineer+OR+qualit%C3%A4tsmanager&location=Hamburg&radius=30"
 }
 
@@ -94,6 +95,18 @@ def scrape_xing(soup, site):
     print(f"[{site}] Found {len(jobs)} jobs")
     return jobs
 
+def scrape_indeed(soup, site):
+    jobs = []
+    for card in soup.select("a.jcs-JobTitle, h2.jobTitle a, [data-testid='job-title'] a"):
+        title = card.text.strip()
+        href = card.get("href", "")
+        if href and not href.startswith("http"):
+            href = "https://de.indeed.com" + href
+        if title and href:
+            jobs.append((title, href))
+    print(f"[{site}] Found {len(jobs)} jobs")
+    return jobs
+
 SCRAPERS = {
     "LinkedIn Hamburg": scrape_linkedin,
     "LinkedIn Remote": scrape_linkedin,
@@ -105,7 +118,8 @@ SITE_EMOJI = {
     "LinkedIn Hamburg": "💼",
     "LinkedIn Remote": "🌍",
     "Stepstone": "🟧",
-    "Xing": "🔵",
+    "Indeed": "🔵",
+    "Xing": "🟩",
 }
 
 sent_jobs = load_sent_jobs()
