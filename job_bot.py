@@ -16,6 +16,7 @@ search_urls = {
 keywords = [
     "quality", "qualitäts", "iso", "continuous improvement",
     "operational excellence", "process improvement", "iso 9001",
+    "document", "documentation", "documentation management",
     "qualitätsmanager", "qualitätsingenieur", "lean", "six sigma"
 ]
 exclude_keywords = [
