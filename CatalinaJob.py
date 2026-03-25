@@ -7,20 +7,22 @@ BOT_TOKEN = "7965984943:AAF1b6ORfIhwJkL9ACf7qWfYckX4dbwBqqU"
 CHAT_ID = "806465871"
 
 search_urls = {
-    "LinkedIn Hamburg": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Hamburg%2C%20Germany&f_TPR=r28800",
-    "LinkedIn Remote": "https://www.linkedin.com/jobs/search/?keywords=quality%20manager%20OR%20quality%20engineer%20OR%20qualit%C3%A4tsmanager%20OR%20qualit%C3%A4tsingenieur%20OR%20continuous%20improvement&location=Germany&f_WT=2&f_TPR=r28800",
-      }
+    "LinkedIn Hamburg": "https://www.linkedin.com/jobs/search/?keywords=Senior%20Counsel%20OR%20Commercial%20Counsel%20OR%20Legal%20Counsel&location=Hamburg%2C%20Germany&f_TPR=r86400",
+    
+    "LinkedIn USA Remote": "https://www.linkedin.com/jobs/search/?keywords=Senior%20Counsel%20OR%20Commercial%20Counsel%20OR%20Legal%20Counsel&location=United%20States&f_WT=2&f_TPR=r86400",
+}
 
 keywords = [
-    "quality", "qualitäts", "iso", "continuous improvement",
-    "operational excellence", "process improvement", "iso 9001",
-    "document", "documentation", "documentation management",
-    "qualitätsmanager", "qualitätsingenieur", "lean", "six sigma"
+    "senior counsel", "commercial counsel", "legal counsel",
+    "msa", "rfp", "nda", "mro", "oem",
+    "saas", "licensing", "contracts", "sales",
+    "ai governance", "negotiation"
 ]
+
 exclude_keywords = [
-    "software", "qa tester", "automation tester", "selenium",
-    "javascript", "developer", "software engineer", "test engineer",
-    "frontend", "backend", "devops"
+    "junior", "assistant", "paralegal", "intern",
+    "working student", "werkstudent",
+    "software engineer", "developer", "qa", "tester"
 ]
 
 def load_sent_jobs():
@@ -58,12 +60,12 @@ def scrape_linkedin(soup, site):
     return jobs
 
 SCRAPERS = {
-    "LinkedIn Hamburg": scrape_linkedin,
+    "LinkedIn Miami": scrape_linkedin,
     "LinkedIn Remote": scrape_linkedin,
     }
 
 SITE_EMOJI = {
-    "LinkedIn Hamburg": "💼",
+    "LinkedIn Miami": "💼",
     "LinkedIn Remote": "🌍",
   }
 
@@ -95,7 +97,7 @@ def scan_jobs():
                 job_id = f"{title_lower}_{href}"
 
                 if (
-                    any(k in title_lower for k in keywords)
+                    any(k in title_lower for k in ["counsel", "legal"])
                     and not any(x in title_lower for x in exclude_keywords)
                     and job_id not in sent_jobs
                 ):
