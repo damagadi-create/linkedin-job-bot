@@ -118,10 +118,5 @@ def scan_jobs():
 
         time.sleep(10)
 
-while True:
-    try:
-        scan_jobs()
-    except Exception as e:
-        print(f"Outer loop error: {e}")
-        send_telegram(f"⚠️ Bot crashed and restarted:\n<code>{e}</code>")
-    time.sleep(900)
+if __name__ == "__main__":
+    scan_jobs()
