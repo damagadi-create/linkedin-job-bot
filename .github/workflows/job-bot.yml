@@ -1,25 +1,33 @@
-name: Catalina Job Bot
+name: Job Bot
 
 on:
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes
-  workflow_dispatch:         # allows manual run
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: Run bot
-        run: python your_script.py
+      - name: Load previous jobs
+        uses: actions/cache@v4
+        with:
+          path: sent_jobs.json
+          key: jobs-cache
+
+      - run: python CatalinaJob.py   # <-- make sure this matches your file
+
+      - name: Save jobs
+        uses: actions/cache@v4
+        with:
+          path: sent_jobs.json
+          key: jobs-cache
